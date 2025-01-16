@@ -1,5 +1,5 @@
 mode: ContinuousDeployment
-source-branches: ['main', 'feature', 'bug']
+source-branches: ['main', 'feature/*', 'bug/*']
 branches:
   main:
     increment: Patch
