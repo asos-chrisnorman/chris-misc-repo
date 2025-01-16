@@ -5,5 +5,3 @@ branches:
     increment: Patch
   feature:
     increment: Minor
-  bug:
-    increment: Patch
