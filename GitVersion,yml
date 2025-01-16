@@ -1,13 +1,7 @@
 mode: ContinuousDeployment
-source-branches: ['main', 'feature', 'bug']
+source-branches: ['main', 'feature/*', 'bug/*']
 branches:
   main:
     increment: Patch
   feature:
-    regex: ^feature[\/-](?<StoryNumber>\d{6,7})-.*
-    label: 'feature-{StoryNumber}'
     increment: Minor
-  bug:
-    regex: ^bug[\/-](?<StoryNumber>\d{6,7})-.*
-    label: 'bug-{StoryNumber}'
-    increment: Patch
