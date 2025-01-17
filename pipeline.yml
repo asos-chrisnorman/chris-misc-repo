@@ -18,4 +18,4 @@ jobs:
       - task: gitversion/execute@0
         inputs:
           useConfigFile: true
-          configFilePath: GitVersion.yaml
+          configFilePath: GitVersion.yml
