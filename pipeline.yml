@@ -1,0 +1,21 @@
+trigger: none
+pr: none
+pool:
+  vmImage: ubuntu-latest
+
+jobs:
+  - job: calculateSemVer
+    displayName: Calculate SemVer
+
+    steps:
+      - checkout: self
+        fetchDepth: 0
+
+      - task: gitversion/setup@0
+        inputs:
+          versionSpec: '5.x'
+
+      - task: gitversion/execute@0
+        inputs:
+          useConfigFile: true
+          configFilePath: GitVersion.yaml
