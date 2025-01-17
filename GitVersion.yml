@@ -1,7 +1,8 @@
 mode: Mainline
-next-version: '1.0'
 branches:
-  master:
-    regex: ^master$|^main$
-  pull-request:
-    tag: pr
+  main:
+    increment: Patch
+  feature:
+    regex: ^feature[/-]
+    tag: useBranchName 
+    increment: Minor
