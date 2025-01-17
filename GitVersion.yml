@@ -6,7 +6,3 @@ branches:
     regex: ^feature[\/-](?<StoryNumber>\d{6,7})-.*
     tag: 'feature-{StoryNumber}'
     increment: Minor
-  bug:
-    regex: ^bug[\/-](?<StoryNumber>\d{6,7})-.*
-    tag: 'bug-{StoryNumber}'
-    increment: Patch
