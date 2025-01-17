@@ -1,7 +1,13 @@
-mode: Mainline
-next-version: '1.0'
+mode: ContinuousDeployment
+source-branches: ['main', 'feature', 'bug']
 branches:
-  master:
-    regex: ^master$|^main$
-  pull-request:
-    tag: pr
+  main:
+    increment: Patch
+  feature:
+    regex: ^feature[\/-](?<StoryNumber>\d{6,7})-.*
+    label: 'feature-{StoryNumber}'
+    increment: Minor
+  bug:
+    regex: ^bug[\/-](?<StoryNumber>\d{6,7})-.*
+    label: 'bug-{StoryNumber}'
+    increment: Patch
