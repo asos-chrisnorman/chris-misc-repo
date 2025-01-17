@@ -3,6 +3,6 @@ branches:
   main:
     increment: Patch
   feature:
-    regex: ^feature[\/-](?<StoryNumber>\d{6,7})-.*
-    tag: 'feature-{StoryNumber}'
+    regex: ^feature[/-]
+    tag: useBranchName 
     increment: Minor
