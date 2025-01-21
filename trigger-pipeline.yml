@@ -1,0 +1,66 @@
+trigger: none
+pr: none
+pool:
+  vmImage: ubuntu-latest
+
+paramters:
+  - name: pipelineName
+    type: string
+    default: 'asos-chrisnorman.chris-misc-repo'
+  - name: environment
+    type: string
+    default: ''
+  - name: azureSubscription
+    type: string
+    default: 'AsosCommercialIntegrationNonProd'
+
+jobs:
+  - job: triggerAndWaitForPipeline
+    displayName: Trigger And Wait For ${{ parameters.pipelineName }} Pipeline
+
+    steps:
+      - task: AzureCLI@2
+        displayName: Trigger Pipeline
+        inputs:
+          azureSubscription: ${{ parameters.azureSubscription }}
+          scriptType: pscore
+          scriptLocation: inlineScript
+          inlineScript: >
+            $runId = (az pipelines run 
+            --name ${{ parameters.pipelineName }}
+            --organization https://dev.azure.com/asos
+            --project Retail
+            --branch main | ConvertFrom-JSON).id
+
+            Write-Host "##vso[task.setvariable variable=pipelineRunId;]$runId"
+        env:
+          AZURE_DEVOPS_EXT_PAT: $(System.AccessToken)
+
+      - task: AzureCLI@2
+        displayName: Wait for Pipeline To Complete
+        inputs:
+          azureSubscription: ${{ parameters.azureSubscription }}
+          scriptType: pscore
+          scriptLocation: inlineScript
+          inlineScript: >
+            $status = ""
+
+            while($status -ne "completed")
+            {
+              Start-Sleep -Seconds 10
+              $status = (az pipelines runs show `
+                          --id $(pipelineRunId) `
+                          --organization https://dev.azure.com/asos `
+                          --project Retail | ConvertFrom-Json).status
+            }
+
+            if ((az pipelines runs show `
+                  --id $(pipelineRunId) `
+                  --organization https://dev.azure.com/asos `
+                  --project Retail | ConvertFrom-Json).result -ne "succeeded")
+            {
+              Write-Host "##vso[task.logissue type=error]Pipeline (Run ID: $(pipelineRunId)) was unsuccessful."
+              exit 1
+            }
+        env:
+          AZURE_DEVOPS_EXT_PAT: $(System.AccessToken)
