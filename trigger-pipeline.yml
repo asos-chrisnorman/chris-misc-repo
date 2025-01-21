@@ -3,7 +3,7 @@ pr: none
 pool:
   vmImage: ubuntu-latest
 
-paramters:
+parameters:
   - name: pipelineName
     type: string
     default: ''
