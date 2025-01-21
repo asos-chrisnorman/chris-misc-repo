@@ -6,13 +6,7 @@ pool:
 paramters:
   - name: pipelineName
     type: string
-    default: 'asos-chrisnorman.chris-misc-repo'
-  - name: environment
-    type: string
     default: ''
-  - name: azureSubscription
-    type: string
-    default: 'AsosCommercialIntegrationNonProd'
 
 jobs:
   - job: triggerAndWaitForPipeline
@@ -22,7 +16,7 @@ jobs:
       - task: AzureCLI@2
         displayName: Trigger Pipeline
         inputs:
-          azureSubscription: ${{ parameters.azureSubscription }}
+          azureSubscription: AsosCommercialIntegrationNonProd
           scriptType: pscore
           scriptLocation: inlineScript
           inlineScript: >
@@ -39,7 +33,7 @@ jobs:
       - task: AzureCLI@2
         displayName: Wait for Pipeline To Complete
         inputs:
-          azureSubscription: ${{ parameters.azureSubscription }}
+          azureSubscription: AsosCommercialIntegrationNonProd
           scriptType: pscore
           scriptLocation: inlineScript
           inlineScript: >
