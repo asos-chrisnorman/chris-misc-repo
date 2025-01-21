@@ -19,3 +19,5 @@ jobs:
         inputs:
           useConfigFile: true
           configFilePath: GitVersion.yml
+
+      - pwsh: Write-Host "$(Build.Reason) --- $(Build.QueuedBy)"
